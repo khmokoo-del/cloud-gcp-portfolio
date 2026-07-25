@@ -9,8 +9,13 @@ This repository showcases a comprehensive, enterprise-grade security and complia
 In enterprise environments, data leakage via cloud sharing is a constant threat. I built a relentless, 24/7 automated enforcement mechanism utilizing GCP serverless architecture to ensure zero-touch compliance.
 
 * **The Discoverer (`discoverer.py`):** A scheduled Cloud Run service that authenticates via GCP IAM Service Accounts and scans specific Google Workspace Organizational Units (OUs). It securely packages user audit data and publishes it to a Pub/Sub message queue.
-* **The Sanitizer (`sanitizer.py`):** An event-driven worker triggered dynamically via Eventarc. It reads the targeted user's Google Drive, identifies exposed files, and neutralizes the threat by restricting access.
-* **The Workspace BI Orchestrator (`dashboard_orchestrator.js`):** Every automated action is streamed directly into BigQuery. This Google Apps Script pulls that telemetry data and transforms it into a multi-tab Google Sheets dashboard to generate manager sign-off ledgers.
+* **The Sanitizer (`sanitizer.py`):** An event-driven Data Loss Prevention (DLP) pipeline built on GCP Cloud Functions and Pub/Sub. Using Domain-Wide Delegation, it scans Google Workspace environments and directly trashes unauthorized file types. It includes a custom state-machine to bypass serverless execution timeout limits and streams file metadata and sharing risks—such as exposed public links—directly into BigQuery for security analysis.
+* **The Business Intelligence Pipeline (`workspace_etl_pipeline.gs`):** A custom Google Apps Script acting as an ETL (Extract, Transform, Load) engine. It queries the audit logs directly from BigQuery, explicitly handling API pagination to prevent data loss, and dynamically generates a multi-tiered GRC (Governance, Risk, and Compliance) dashboard. Features include:
+* **Stateful Manager Workflows:** Generates a target directory for local managers to approve or exclude accounts, preserving validation states across automated sheet refreshes.
+* **External Threat Isolation (DLP):** Programmatically parses sharing permissions against the internal corporate domain, isolating files shared externally for immediate SOC remediation.
+* **Shadow IT & Malware Hunting:** Utilizes Regex patterns to scan file extensions, automatically flagging unauthorized executables (`.exe`, `.bat`, `.ps1`, `.apk`) stored in user cloud drives.
+
+
 
 ## Part 2: Endpoint Data Leakage Prevention (DLP) & Device Control
 
@@ -46,4 +51,4 @@ The capstone of this architecture is a massive, asynchronous orchestration engin
 
 ## Business Impact
 
-By combining local hardware control, global network API integrations, state-machine orchestration, and event-driven serverless cloud components, this architecture achieves true **zero-touch compliance**. It autonomously blocks data exfiltration, validates high-availability network routing, actively hunts for system vulnerabilities, and maintains rigorous, immutable audit trails for regulatory compliance without requiring manual intervention.
+By combining local hardware control, global network API integrations, state-machine orchestration, and event-driven serverless cloud components, this architecture achieves true zero-touch compliance. It autonomously blocks data exfiltration, validates high-availability network routing, actively hunts for system vulnerabilities, and maintains rigorous, immutable audit trails for regulatory compliance without requiring manual intervention.
