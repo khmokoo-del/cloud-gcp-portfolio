@@ -1,3 +1,4 @@
+```javascript
 /**
  * ENTERPRISE SECURITY POSTURE MANAGEMENT (CSPM) - 
  * Architecture: 4-Phase Chained Orchestrator | LockService Concurrency Protection
@@ -281,7 +282,7 @@ function evaluateESETCoverage() {
 
 function evaluateGeographicDistribution() {
   let geoCounts = {};
-  const countryMap = { "FRA": "France", "FR": "France", "SLE": "Sierra Leone", "SL": "Sierra Leone", "SIL": "Sierra Leone", "ZAF": "South Africa", "ZA": "South Africa", "TGO": "Togo", "TG": "Togo", "DZA": "Algeria", "DZ": "Algeria", "BEN": "Benin", "BJ": "Benin", "NGA": "Nigeria", "NG": "Nigeria", "MLI": "Mali", "ML": "Mali", "CIV": "Côte d'Ivoire", "CI": "Côte d'Ivoire", "KWT": "Kuwait", "KW": "Kuwait", "GIN": "Guinea", "GN": "Guinea", "AZE": "Azerbaijan", "AZ": "Azerbaijan", "BFA": "Burkina Faso", "BF": "Burkina Faso", "CCCPT": "South Africa" };
+  const countryMap = { "DEU": "Germany", "DE": "Germany", "CAN": "Canada", "CA": "Canada", "CANA": "Canada", "AUS": "Australia", "AU": "Australia", "JPN": "Japan", "JP": "Japan", "BRA": "Brazil", "BR": "Brazil", "MEX": "Mexico", "MX": "Mexico", "IND": "India", "IN": "India", "ITA": "Italy", "IT": "Italy", "ESP": "Spain", "ES": "Spain", "SWE": "Sweden", "SE": "Sweden", "NOR": "Norway", "NO": "Norway", "FIN": "Finland", "FI": "Finland", "CHL": "Chile", "CL": "Chile", "AUSPT": "Australia" };
   jcSystemsCache.forEach(s => {
     let host = s.hostname ? s.hostname.toUpperCase().trim() : "";
     let rawRegion = host.indexOf('-') > 0 ? host.split('-')[0].trim() : host.substring(0, 3);
@@ -506,7 +507,7 @@ function buildTab(ss, sheetName, matrix, formatFn, descEN, descFR) {
   let dataRange = sheet.getRange(6, 1, data.length, totalCols);
   dataRange.setValues(data).setBackground(BRAND_SECONDARY).setFontColor("#FFFFFF").setHorizontalAlignment("center").setVerticalAlignment("middle");
   sheet.getRange(6, 1, 1, totalCols).setBackground(BRAND_PRIMARY).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
-       
+        
   if (formatFn) formatFn(sheet);
   buildUniversalHeader(sheet, sheetName, descEN, descFR, totalCols);
   sheet.setFrozenRows(6);
@@ -657,3 +658,5 @@ function dispatchLiveAgentSOAR(anomalies) {
 function dispatchPipelineFailureAlert(err) { UrlFetchApp.fetch("https://your-domain.ladesk.com/api/v3/tickets", { "method": "post", "contentType": "application/json", "headers": { "apikey": LA_API_KEY }, "payload": JSON.stringify({ "subject": "[CRITICAL] CSPM Pipeline Failure", "message": `Execution Exception:\n${err}`, "departmentid": "your-dept-id" }), "muteHttpExceptions": true }); }
 function showSidebar() { SpreadsheetApp.getUi().showSidebar(HtmlService.createHtmlOutputFromFile('Sidebar').setTitle('Active Response').setWidth(300)); }
 String.prototype.toTitleCase = function () { return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}); };
+
+```
