@@ -2,7 +2,7 @@
  * Project: Workspace_Exfiltration_Intelligence_Feed
  * Description: 5-Tiered BI Dashboard separating Drive and Gmail exfiltration, 
  * aggregating regional risks, and identifying top internal and external offenders.
- * Author: Enterprise Cloud Engineering
+ * Author: Khutso
  */
 
 // ==========================================
